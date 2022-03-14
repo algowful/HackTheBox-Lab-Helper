@@ -1,8 +1,7 @@
 #!/bin/bash
-
 # A bunch of useful functions for hacking on HackTheBox
 
-target_file=$HOME/ctf/htb/labs/.target
+target_file=".target"
 
 htbhost () {
     ip=$(ip a show tun0 2>/dev/null | grep inet | head -1 | awk '{print $2}' | sed s/...$//)
@@ -40,10 +39,10 @@ htbinit () {
 }
 
 htbkill () {
-    htbpid=$(pidof openvpn)
-    if [ -n "$htbpid" ]; then
-        echo "[*] Killing OpenVPN PID: $htbpid"
-        sudo kill -9 $htbpid
+    htbPID=$(pidof openvpn)
+    if [ -n "$htbPID" ]; then
+        echo "[*] Killing OpenVPN PID: $htbPID"
+        sudo kill -9 $htbPID
     else
         echo "[*] No OpenVPN Session..."
     fi
