@@ -1,19 +1,18 @@
 # HackTheBox Functions
+
 ## Description:
-A list of command line bash functions which help to manage HackTheBox VPN connections
+A list of command line functions which help to manage HackTheBox VPN connections
 
 ## Available Functions:
 ### htbhost
-- Check if `tun0` device is available if so return inet address
+- If the `tun0` interface is up -> return the IPv4 address for the interface.
 
 ### htbtarget
-- Expects an IP to be passed in. Once passe in it write IP to a file.
-- If no value is passed in and the file it created is avail, return IP in file
+- If IP value is passed -> Write to `.target` file.
+- If no value is passed -> Return value in `.target` file.
 
 ### htbinit
-- Initiate connection in background using a .ovpn file
-
+- If OpenVPN proccess not already running -> Initiate OpenVPN session in background
 
 ### htbkill
-- Kill the OpenVPN session by sending `SIGKILL` signal
-- Also deletes file created by `htbtarget` function if found
+- If OpenVPN proccess is running -> Send `SIGKILL` signal to OpenVPN procces PID.
