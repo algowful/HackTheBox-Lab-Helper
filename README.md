@@ -5,7 +5,7 @@ A list of command line functions which help to manage HackTheBox VPN connections
 
 ## Available Functions:
 ### htbhost
-- If the `tun0` interface is up -> return the IPv4 address for the interface.
+- If the `tun0` interface is up -> Return the IPv4 address for the interface.
 
 ### htbtarget
 - If IP value is passed -> Write to `.target` file.
