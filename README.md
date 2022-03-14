@@ -16,3 +16,6 @@ A list of command line functions which help to manage HackTheBox VPN connections
 
 ### htbkill
 - If OpenVPN proccess is running -> Send `SIGKILL` signal to OpenVPN procces PID.
+
+## Setup:
+Source the bash script in your `~/.bashrc` file: `source <Path to Script>`
