@@ -1,14 +1,22 @@
 #!/bin/bash
-#  _   _            _    _____ _          ____              _____                 _   _                 
-# | | | | __ _  ___| | _|_   _| |__   ___| __ )  _____  __ |  ___|   _ _ __   ___| |_(_) ___  _ __  ___ 
-# | |_| |/ _` |/ __| |/ / | | | '_ \ / _ \  _ \ / _ \ \/ / | |_ | | | | '_ \ / __| __| |/ _ \| '_ \/ __|
-# |  _  | (_| | (__|   <  | | | | | |  __/ |_) | (_) >  <  |  _|| |_| | | | | (__| |_| | (_) | | | \__ \
-# |_| |_|\__,_|\___|_|\_\ |_| |_| |_|\___|____/ \___/_/\_\ |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
+
+#  _   _            _    _____ _          ____            
+# | | | | __ _  ___| | _|_   _| |__   ___| __ )  _____  __
+# | |_| |/ _` |/ __| |/ / | | | '_ \ / _ \  _ \ / _ \ \/ /
+# |  _  | (_| | (__|   <  | | | | | |  __/ |_) | (_) >  < 
+# |_| |_|\__,_|\___|_|\_\ |_| |_| |_|\___|____/ \___/_/\_\
+#  _____                 _   _                 
+# |  ___|   _ _ __   ___| |_(_) ___  _ __  ___ 
+# | |_ | | | | '_ \ / __| __| |/ _ \| '_ \/ __|
+# |  _|| |_| | | | | (__| |_| | (_) | | | \__ \
+# |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
 #
 # A bunch of useful functions for hacking on HackTheBox
-#TODO: htbinitfile - Function to set path for .ovpn file used for connection
+
+# TODO: htbinit - Make it check for .init file created by htbinitfile()
 
 target_file=".target"
+vpn_file=".init"
 
 htbhost () {
     ip=$(ip a show tun0 2>/dev/null | grep inet | head -1 | awk '{print $2}' | sed s/...$//)
@@ -35,6 +43,28 @@ htbtarget () {
             cat $target_file
         else
             echo "[*] Please Set Target..."
+        fi
+    fi
+}
+
+htbinitfile () {
+    if [ -n "$1" ]; then
+        if [ -e $1 ]; then
+            echo $1 > $vpn_file
+            echo "[*] Set VPN File Path..."
+            echo ""
+         else
+             echo "[*] File Does Not Exists..."
+             echo ""
+             return 1
+         fi
+    else
+        if [ -e $vpn_file ]; then
+            cat $vpn_file
+        else
+            echo "[*] VPN File Path Not Set..."
+            echo ""
+            return 1
         fi
     fi
 }
