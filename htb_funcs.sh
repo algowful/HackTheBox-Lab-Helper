@@ -1,5 +1,6 @@
 #!/bin/bash
 # A bunch of useful functions for hacking on HackTheBox
+#TODO: htbinitfile - Function to set path for .ovpn file used for connection
 
 target_file=".target"
 
@@ -13,8 +14,13 @@ htbhost () {
     fi
 }
 
-# TODO: Add a check to see if openvpn is even running
 htbtarget () {
+    pidof openvpn >/dev/null
+    if [ $? -eq 1 ];then
+        echo "[*] OpenVPN Session Not Running..."
+        return 1
+    fi
+
     if [ -n "$1" ]; then
         echo $1 > $target_file
         echo "[*] Set HTB Target..."
