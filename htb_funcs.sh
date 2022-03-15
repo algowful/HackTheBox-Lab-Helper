@@ -46,15 +46,18 @@ htbinit () {
 }
 
 htbkill () {
-    htbPID=$(pidof openvpn)
-    if [ -n "$htbPID" ]; then
-        echo "[*] Killing OpenVPN PID: $htbPID"
-        sudo kill -9 $htbPID
+    pid=$(pidof openvpn)
+    if [ $? -eq 1 ]; then
+        echo "[*] No OpenVPN Session Running..."
+        echo ""
+        return 1
     else
-        echo "[*] No OpenVPN Session..."
-    fi
+        echo "[*] Killing OpenVPN PID: $pid"
+        echo ""
+        sudo kill -SIGKILL $pid
 
-    if [ -e $target_file ]; then
-        rm $target_file
+        if [ -e $target_file ]; then
+            rm $target_file
+        fi
     fi
 }
