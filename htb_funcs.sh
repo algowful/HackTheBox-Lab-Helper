@@ -36,7 +36,7 @@ htbtarget () {
 htbinit () {
     pidof openvpn >/dev/null
     if [ $? -eq 1 ]; then
-        sudo --background openvpn $/HOME/Downloads/lab_advenabl.ovpn &>/dev/null
+        sudo --background openvpn $HOME/Downloads/lab_advenabl.ovpn &>/dev/null
         echo "[*] Initiated Connection..."
         echo ""
     else
