@@ -34,13 +34,14 @@ htbtarget () {
 }
 
 htbinit () {
-    isRunning=$(pidof openvpn)
-
-    if [ -n "$isRunning" ]; then
-        echo "[*] OpenVPN is Already Running..."
-    else 
-        sudo --background openvpn $HOME/Downloads/lab_advenabl.ovpn &>/dev/null
+    pidof openvpn >/dev/null
+    if [ $? -eq 1 ]; then
+        sudo --background openvpn $/HOME/Downloads/lab_advenabl.ovpn &>/dev/null
         echo "[*] Initiated Connection..."
+        echo ""
+    else
+        echo "[*] OpenVPN is Already Running..."
+        return 1
     fi
 }
 
