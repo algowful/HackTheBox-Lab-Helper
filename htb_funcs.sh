@@ -13,8 +13,8 @@
 #
 # A bunch of useful functions for hacking on HackTheBox
 
-target_file=".target"
-init_file=".init"
+target_file="/home/user/dev/bash/htb_funcs/.target"
+init_file="/home/user/dev/bash/htb_funcs/.init"
 
 htbhost () {
     ip=$(ip a show tun0 2>/dev/null | grep inet | head -1 | awk '{print $2}' | sed s/...$//)
@@ -30,6 +30,7 @@ htbtarget () {
     pidof openvpn >/dev/null
     if [ $? -eq 1 ];then
         echo "[*] OpenVPN Session Not Running..."
+        echo ""
         return 1
     fi
 
@@ -41,6 +42,8 @@ htbtarget () {
             cat $target_file
         else
             echo "[*] Please Set Target..."
+            echo ""
+            return 1
         fi
     fi
 }
