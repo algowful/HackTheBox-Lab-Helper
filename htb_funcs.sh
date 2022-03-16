@@ -16,7 +16,7 @@
 # TODO: htbinit - Make it check for .init file created by htbinitfile()
 
 target_file=".target"
-vpn_file=".init"
+init_file=".init"
 
 htbhost () {
     ip=$(ip a show tun0 2>/dev/null | grep inet | head -1 | awk '{print $2}' | sed s/...$//)
@@ -50,7 +50,7 @@ htbtarget () {
 htbinitfile () {
     if [ -n "$1" ]; then
         if [ -e $1 ]; then
-            echo $1 > $vpn_file
+            echo $1 > $init_file
             echo "[*] Set VPN File Path..."
             echo ""
          else
@@ -59,8 +59,8 @@ htbinitfile () {
              return 1
          fi
     else
-        if [ -e $vpn_file ]; then
-            cat $vpn_file
+        if [ -e $init_file ]; then
+            cat $init_file
         else
             echo "[*] VPN File Path Not Set..."
             echo ""
@@ -72,7 +72,7 @@ htbinitfile () {
 htbinit () {
     pidof openvpn >/dev/null
     if [ $? -eq 1 ]; then
-        sudo --background openvpn $HOME/Downloads/lab_advenabl.ovpn &>/dev/null
+        sudo --background openvpn $(cat $init_file) &>/dev/null
         echo "[*] Initiated Connection..."
         echo ""
     else
