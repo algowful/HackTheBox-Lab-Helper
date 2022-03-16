@@ -13,8 +13,6 @@
 #
 # A bunch of useful functions for hacking on HackTheBox
 
-# TODO: htbinit - Make it check for .init file created by htbinitfile()
-
 target_file=".target"
 init_file=".init"
 
