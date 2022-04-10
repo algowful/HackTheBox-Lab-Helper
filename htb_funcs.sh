@@ -22,7 +22,8 @@ htbhost () {
     if [ -n "$ip" ]; then
         echo $ip
     else
-        echo "[*] You Do Not Seem To Be Connected To The VPN..."
+        echo "[-] You Do Not Seem To Be Connected To The VPN..."
+	echo
     fi
 }
 
@@ -30,19 +31,20 @@ htbtarget () {
     pidof openvpn >/dev/null
     if [ $? -eq 1 ];then
         echo "[*] OpenVPN Session Not Running..."
-        echo ""
+        echo
         return 1
     fi
 
     if [ -n "$1" ]; then
         echo $1 > $target_file
         echo "[*] Set HTB Target..."
+	echo
     else
         if [ -e $target_file ]; then
             cat $target_file
         else
             echo "[*] Please Set Target..."
-            echo ""
+      	    echo
             return 1
         fi
     fi
@@ -52,19 +54,19 @@ htbinitfile () {
     if [ -n "$1" ]; then
         if [ -e $1 ]; then
             echo $1 > $init_file
-            echo "[*] Set VPN File Path..."
-            echo ""
+            echo "[*] Init File Path Set"
+            echo
          else
-             echo "[*] File Does Not Exists..."
-             echo ""
+             echo "[-] File Does Not Exist..."
+             echo
              return 1
          fi
     else
         if [ -e $init_file ]; then
             cat $init_file
         else
-            echo "[*] VPN File Path Not Set..."
-            echo ""
+            echo "[-] Init File Has Not Been Set..."
+            echo
             return 1
         fi
     fi
@@ -73,11 +75,17 @@ htbinitfile () {
 htbinit () {
     pidof openvpn >/dev/null
     if [ $? -eq 1 ]; then
-        sudo --background openvpn $(cat $init_file) &>/dev/null
-        echo "[*] Initiated Connection..."
-        echo ""
+	if [ -f $init_file ]; then
+	    sudo --background openvpn $(cat $init_file) &>/dev/null
+	    echo "[*] Initiated Connection..."
+	    echo
+    	else
+	   echo "[-] Set Init File Path..."
+	   echo
+	fi
     else
-        echo "[*] OpenVPN is Already Running..."
+        echo "[-] OpenVPN is Already Running..."
+	echo
         return 1
     fi
 }
@@ -85,15 +93,15 @@ htbinit () {
 htbkill () {
     pid=$(pidof openvpn)
     if [ $? -eq 1 ]; then
-        echo "[*] No OpenVPN Session Running..."
-        echo ""
+        echo "[-] No OpenVPN Session Running..."
+        echo
         return 1
     else
         echo "[*] Killing OpenVPN PID: $pid"
-        echo ""
         sudo kill -SIGKILL $pid
+	echo 
 
-        if [ -e $target_file ]; then
+        if [ -f $target_file ]; then
             rm $target_file
         fi
     fi
