@@ -1,0 +1,108 @@
+#!/bin/bash
+
+#  _   _            _    _____ _          ____            
+# | | | | __ _  ___| | _|_   _| |__   ___| __ )  _____  __
+# | |_| |/ _` |/ __| |/ / | | | '_ \ / _ \  _ \ / _ \ \/ /
+# |  _  | (_| | (__|   <  | | | | | |  __/ |_) | (_) >  < 
+# |_| |_|\__,_|\___|_|\_\ |_| |_| |_|\___|____/ \___/_/\_\
+#  _____                 _   _                 
+# |  ___|   _ _ __   ___| |_(_) ___  _ __  ___ 
+# | |_ | | | | '_ \ / __| __| |/ _ \| '_ \/ __|
+# |  _|| |_| | | | | (__| |_| | (_) | | | \__ \
+# |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
+#
+# A bunch of useful functions for hacking on HackTheBox
+
+target_file="/home/user/dev/bash/htb_funcs/.target"
+init_file="/home/user/dev/bash/htb_funcs/.init"
+
+htbhost () {
+    ip=$(ip a show tun0 2>/dev/null | grep inet | head -1 | awk '{print $2}' | sed s/...$//)
+
+    if [ -n "$ip" ]; then
+        echo $ip
+    else
+        echo "[-] You Do Not Seem To Be Connected To The VPN..."
+	echo
+    fi
+}
+
+htbtarget () {
+    pidof openvpn >/dev/null
+    if [ $? -eq 1 ];then
+        echo "[*] OpenVPN Session Not Running..."
+        echo
+        return 1
+    fi
+
+    if [ -n "$1" ]; then
+        echo $1 > $target_file
+        echo "[*] Set HTB Target..."
+	echo
+    else
+        if [ -e $target_file ]; then
+            cat $target_file
+        else
+            echo "[*] Please Set Target..."
+      	    echo
+            return 1
+        fi
+    fi
+}
+
+htbinitfile () {
+    if [ -n "$1" ]; then
+        if [ -e $1 ]; then
+            echo $1 > $init_file
+            echo "[*] Init File Path Set"
+            echo
+         else
+             echo "[-] File Does Not Exist..."
+             echo
+             return 1
+         fi
+    else
+        if [ -e $init_file ]; then
+            cat $init_file
+        else
+            echo "[-] Init File Has Not Been Set..."
+            echo
+            return 1
+        fi
+    fi
+}
+
+htbinit () {
+    pidof openvpn >/dev/null
+    if [ $? -eq 1 ]; then
+	if [ -f $init_file ]; then
+	    sudo --background openvpn $(cat $init_file) &>/dev/null
+	    echo "[*] Initiated Connection..."
+	    echo
+    	else
+	   echo "[-] Set Init File Path..."
+	   echo
+	fi
+    else
+        echo "[-] OpenVPN is Already Running..."
+	echo
+        return 1
+    fi
+}
+
+htbkill () {
+    pid=$(pidof openvpn)
+    if [ $? -eq 1 ]; then
+        echo "[-] No OpenVPN Session Running..."
+        echo
+        return 1
+    else
+        echo "[*] Killing OpenVPN PID: $pid"
+        sudo kill -SIGKILL $pid
+	echo 
+
+        if [ -f $target_file ]; then
+            rm $target_file
+        fi
+    fi
+}
