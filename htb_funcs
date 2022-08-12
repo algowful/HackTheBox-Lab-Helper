@@ -13,8 +13,9 @@
 #
 # A bunch of useful functions for hacking on HackTheBox
 
-target_file="/home/user/dev/bash/htb_funcs/.target"
-init_file="/home/user/dev/bash/htb_funcs/.init"
+script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+target_file=$script_dir"/.target"
+init_file=$script_dir"/.init"
 
 htbhost () {
     ip=$(ip a show tun0 2>/dev/null | grep inet | head -1 | awk '{print $2}' | sed s/...$//)
