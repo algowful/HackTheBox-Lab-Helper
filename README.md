@@ -1,21 +1,46 @@
-# HackTheBox Functions
+# HackTheBox Bash Functions
 
-## Description:
-A list of command line functions which help to manage HackTheBox VPN connections
+A collection of useful functions for hacking on HackTheBox, all contained in a single bash script.
 
-## Available Functions:
-### htbhost
-- If the `tun0` interface is up -> Return the IPv4 address for the interface.
+## Functions
+- `htbinitfile`: Sets or prints the path of the OpenVPN config file to use for connecting to the HackTheBox VPN
+- `htbinit`: Initiates a connection to the HackTheBox VPN using the specified OpenVPN config file
+- `htbhost`: Prints the IP of the current HackTheBox VPN connection
+- `htbtarget`: Sets or prints the current HackTheBox target
+- `htbkill`: Terminates the current HackTheBox VPN connection and resets the target file
 
-### htbtarget
-- If IP value is passed -> Write to `.target` file.
-- If no value is passed -> Return value in `.target` file.
 
-### htbinit
-- If OpenVPN proccess not already running -> Initiate OpenVPN session in background
+## Installation
+### Getting files
+```shell
+$ git clone git@github.com:algowful/htbfuncs.git
+```
+### Adding to bashrc
+Edit `~/.bashrc' file with following line
+```shell
+source <path to htbfuncs>
+```
 
-### htbkill
-- If OpenVPN proccess is running -> Send `SIGKILL` signal to OpenVPN procces PID.
 
-## Setup:
-Source the bash script in your `~/.bashrc` file: `source <Path to Script>`
+## Usage
+```shell
+$ htbinitfile ~/Documents/lab.ovpn
+[*] Init File Path Set
+
+$ htbinitfile
+/home/user/Documents/lab.ovpn
+$ htbinit
+[sudo] password for user: 
+[*] Initiated Connection...
+
+$ htbhost
+10.10.14.7
+$ htbtarget 10.10.14.9
+[*] Set HTB Target...
+
+$ htbtarget
+10.10.14.9
+$ htbkill
+[*] Killing OpenVPN PID: 300243
+[sudo] password for user:
+```
