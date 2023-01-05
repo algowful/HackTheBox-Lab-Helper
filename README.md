@@ -23,7 +23,7 @@ source <path to htbfuncs>
 
 
 ## Usage
-```shell
+```text
 $ htbinitfile ~/Documents/lab.ovpn
 [*] Init File Path Set
 
