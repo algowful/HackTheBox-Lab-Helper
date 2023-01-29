@@ -100,7 +100,7 @@ htbkill () {
     else
         echo "[*] Killing OpenVPN PID: $pid"
         sudo kill -SIGKILL $pid
-	    echo 
+        echo
 
         if [ -f $target_file ]; then
             rm $target_file
