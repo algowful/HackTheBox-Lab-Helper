@@ -30,6 +30,7 @@ $ htbinitfile ~/Documents/lab.ovpn
 
 $ htbinitfile
 /home/user/Documents/lab.ovpn
+
 $ htbinit
 [sudo] password for user: 
 [*] Initiated Connection...
