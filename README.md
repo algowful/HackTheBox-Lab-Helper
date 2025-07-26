@@ -1,4 +1,4 @@
-# HackTheBox Bash Functions
+# HackTheBox Lab Helper
 
 A collection of useful functions for hacking on HackTheBox, all contained in a single bash script.
 
