@@ -12,11 +12,12 @@ A collection of useful functions for hacking on HackTheBox, all contained in a s
 
 ## Installation
 ### Getting files
+Download bash file to desired location
 ```shell
 $ git clone git@github.com:algowful/htbfuncs.git
 ```
 ### Adding to bashrc
-Edit `~/.bashrc` file with following line
+Edit `~/.bashrc` file with following line:
 ```shell
 source <path to htbfuncs>
 ```
