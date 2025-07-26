@@ -37,6 +37,7 @@ $ htbinit
 
 $ htbhost
 10.10.14.7
+
 $ htbtarget 10.10.14.9
 [*] Set HTB Target...
 
