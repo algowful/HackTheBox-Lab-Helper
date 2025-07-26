@@ -40,6 +40,7 @@ $ htbtarget 10.10.14.9
 
 $ htbtarget
 10.10.14.9
+
 $ htbkill
 [*] Killing OpenVPN PID: 300243
 [sudo] password for user:
