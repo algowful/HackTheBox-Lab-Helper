@@ -2,6 +2,8 @@
 
 A collection of useful functions for hacking on HackTheBox, all contained in a single bash script.
 
+Assumes HackTheBox VPN session to be the ONLY VPN session.
+
 ## Functions
 - `htbinitfile`: Sets or prints the path of the OpenVPN config file to use for connecting to the HackTheBox VPN
 - `htbinit`: Initiates a connection to the HackTheBox VPN using the specified OpenVPN config file
